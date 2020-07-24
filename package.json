@@ -1,0 +1,23 @@
+{
+  "name": "markdown-host",
+  "version": "1.0.0",
+  "description": "Uma API para render meus markdowns",
+  "main": "src/index.js",
+  "author": "Rodolfo Lemes Saraiva",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "ejs": "^3.1.3",
+    "express": "^4.17.1",
+    "highlight.js": "^10.1.1",
+    "markdown-it": "^11.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  },
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
+  }
+}

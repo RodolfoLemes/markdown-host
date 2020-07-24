@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/tonsky/FiraCode@4/distr/fira_code.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@1,500&family=Roboto:ital@1&display=swap" rel="stylesheet">
+    <style>
+      @import url(https://cdn.jsdelivr.net/gh/tonsky/FiraCode@4/distr/fira_code.css);
+      body {
+        font-family: 'Roboto Mono', monospace;
+        padding-right: 80px;
+        padding-bottom: 50px;
+        padding-left: 80px;
+      }
+
+      @supports (font-variation-settings: normal) {
+        code { font-family: 'Fira Code VF', monospace; }
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <%- markdown %>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/markdown-it@11.0.0/index.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
+  </body>
+</html>
