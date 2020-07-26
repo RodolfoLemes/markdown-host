@@ -37,6 +37,8 @@ Neste curso os recursos que iremos utilizar para realiza-lo são:
  - [NodeJS](https://nodejs.org/en/): Responsável por executar nossos arquivos JavaScript no computador, fora do navegador. Dentro da instalação do NodeJS, já está o [npm](https://www.npmjs.com/).
  - [Yarn](https://yarnpkg.com/): Outra opção de packager manager, caso não queira utilizar o npm.
 
+---
+
 ## JavaScript
 ### Introdução
 >**JavaScript é uma linguagem de script orientada a objetos, multiplataforma. É uma linguagem pequena e leve. Dentro de um ambiente de host (por exemplo, um navegador web) o JavaScript pode ser ligado aos objetos deste ambiente para prover um controle programático sobre eles.**
@@ -200,7 +202,7 @@ As funções em JavaScript podem ser declaradas de duas formas, a forma convenci
 ```js
 // Modo convencional 
 function square(numero) {
-  return numero*numero
+  return numero * numero
 }
 
 // Modo Convencional da forma anônima
@@ -220,10 +222,9 @@ console.log(square(5)) // 25
 console.log(constSquare(5)) // 25
 console.log(arrowSquare(5)) // 25
 console.log(arrowFullSquare(5)) // 25
-
 ```
 
-Um detalhe interessante é que podemos passar funções como parâmetros para funções. Pegamos como exemplo a função de nível `map`, que é uma função dentro do objeto array.
+Um detalhe interessante é que podemos passar funções como parâmetros para funções. Pegamos como exemplo a função de alto nível `map`, que é um método do objeto Array.
 
 ```js
 function map(f,a) {
@@ -235,7 +236,7 @@ function map(f,a) {
 }
 ```
 
-Note que a variável `f` é uma função, que nós que fornecemos para que ele execute em cada elemento do array que nós fornecemos também.
+Note que a parâmetro `f` é uma função, que nós que fornecemos para que ele execute em cada elemento do array, que nós fornecemos também.
 
 Então, em relação aos parâmetros que passamos em nossas funções, temos alguns *features* que podemos realizar nelas.
 
@@ -243,16 +244,16 @@ Então, em relação aos parâmetros que passamos em nossas funções, temos alg
   Com este operador podemos colocar quantos argumentos quisermos na nossa função, permitindo que o usuário coloque o número de argumentos que forem necessários para realizar determinada ação com a nossa função. Este operador é uma *feature* do *ES6*, sendo representado pelos `...`, e a variável que o recebe retorna um array.
 
   ```js
-  function func(a, b, ...c = [3, 4, 5]) {
+  function func(a, b, ...c) {
     console.log(a, b, c)
     return a + b + c.length
   }
 
-  func(1,2,3,4,5)
+  func(1, 2, 3, 4, 5)
   ```
 
 - Parâmetros Predefinidos 
-  Esta funcionalidade, vinda do *ES6*, permite que suas funções possam ter parâmetros que inicializem com algum valor padrão, caso esse não seja passado este argumento para função. Não é permitido usar com o operador rest.
+  Esta funcionalidade, vinda do *ES6*, permite que suas funções possam ter parâmetros que inicializem com algum valor padrão, caso não seja passado este argumento para função. Não é permitido usar com o operador rest.
 
   ```js
   function func(a = 2, b = 3) {
@@ -295,7 +296,7 @@ caneta.parametros // { comprimento: 15, largura: 1 }
 caneta.escrever(15, 12) // 'Escrevi em 15, 12'
 ```
 
-Este modelo de objeto é usado em alguns modelos de API, pois este objeto é convertido em **JSON**, e vice-versa. **JSONs** são de extrema importância, pois é assim que costumamos enviar dados do backend para o frontend.
+Este modelo de objeto é usado em alguns modelos de API, pois este objeto é convertido em **JSON**, e vice-versa. **JSONs** são de extrema importância, pois é assim que costumamos enviar dados do backend para o frontend, e vice-versa.
 
 Arrays e Strings são tratadas como objetos javascript, como dito anteriormente. Logo, existem funções prontas para utilizar com esses dois tipos de dados.
 
@@ -322,6 +323,22 @@ let filterArray = array2.filter(element => {
 console.log(filterArray) // [4, 4]
 ```
 
+Para trabalhar com Strings, igual arrays, existem inúmeros métodos que pode se executar sobre variáveis Strings. Existem várias formas de trabalhar com strings, abaixo segue um código com alguns exemplos.
+
+```js
+const array = ['Lasanha', 'Pizza', 'Macarrão']
+
+// Método normal, com aspas
+const string = "Eu gosto de " + array[0] + " demais"
+// Eu gosto de Lasanha demais
+
+// Método ES6, com crase, utilizando Template Literals
+const string2 = `Eu gosto de ${array[1]} bastante e ${array[2]}` 
+// Eu gosto de Pizza demais
+```
+
+Existem também o objeto `Date`, que é bastante utilizado nesse meio. A seguir, algumas referências sobre [String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String), [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array) e [Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date).
+
 ### Callback, Promises e Async/Await
 >**Para quem veio de uma linguagem síncrona como AdvPL, C, Python e tantas outras, é desafiador mudar a maneira de pensar. JavaScript é uma linguagem executada assincronamente; isso acontece porque quando o interpretador executa um comando que dependa de uma informação externa, como uma requisição, ele não bloqueia o prosseguimento do programa. Essa característica do JavaScript é extremamente utilizada no Node.js.**
 >SANTOS, Victor F. dos;[ Entendendo funções callback em JavaScript](https://medium.com/totvsdevelopers/entendendo-fun%C3%A7%C3%B5es-callback-em-javascript-7b500dc7fa22). Medium - TOTVS Developers. 2019.
@@ -331,27 +348,28 @@ Por JavaScript ser uma linguagem assíncrona, tratamos o nosso código de maneir
 ```js
 const fs = require('fs')
 
-fs.readFile(path, 'utf-8', callback)
+fs.readFile(path, 'utf-8', (file) => {
+  // Aqui é o callback, função que executará depois de ler o arquivo
+})
 ```
 
-Essa função callback retorna a arquivo que lemos, porém, ele "demorará" para ser executado e isso interfere no seguimento do nosso código. Códigos executadas abaixo de função `fs.readFile()` serão executados mais rápido que a função que chamamos, o código não irá esperar. Por este mótivo utilizamos as funções `callbacks` .
+Essa função callback retorna a arquivo que lemos, porém, ele "demorará" para ser executado e isso interfere no seguimento do nosso código. Funções abaixo de função `fs.readFile()` serão executados mais rápido que a função que chamamos, o código não irá esperar. Por este mótivo utilizamos as funções `callbacks`.
 
 Porém, isso faz com que o nosso código fique em formato "barriga", pq ele cresce horizontalmente. 
 
-Para resolver isso, foram criadas as `Promise`, sendo elas objetos JavaScript que lidam de outra forma com os `callbacks`. Não irei abordar a fundo como funciona uma `Promise` e sua estrutura, irei deixar um artigo linkado para isso, [O que são promessas em JavaScript?](https://imasters.com.br/desenvolvimento/o-que-sao-promessas-em-javascript).
+Para resolver isso, foram criadas as `Promise`, sendo elas objetos JavaScript que lidam de outra forma com os `callback`. Não irei abordar a fundo como funciona uma `Promise` e sua estrutura, irei deixar um artigo linkado para isso, [O que são promessas em JavaScript?](https://imasters.com.br/desenvolvimento/o-que-sao-promessas-em-javascript).
 
 O que será passado de importante é como tratar um objeto `Promise` utilizando uma *feature* do *ES6*, chamada `async/await`. 
 
-Primeiramente, vamos supor que precisamos fazer uma requisição com `GET` para o site do [google](https://www.google.com.br/). Para realizar essa requisição usaremos o módulo chamado `axios`[^1]. Então, sabendo que fazer uma requisição, solicitando dados de um site, é algo "demorado" o JavaScript irá entender isso e, então, teremos que tratar ele como um a `Promise`. Para isso, primeiramente criaremos uma função assíncrona no escopo que realizaremos a requisição, pois só assim é permitido usar o comando `await`.
+Primeiramente, vamos supor que precisamos fazer uma requisição com `GET` para o site do [google](https://www.google.com.br/). Para realizar essa requisição usaremos o módulo chamado `axios`<!-- [^1] -->. Então, sabendo que fazer uma requisição, solicitando dados de um site, é algo externo ao nosso código, o JavaScript irá entender isso e, então, teremos que tratar ele como uma `Promise`. Para isso, primeiramente criaremos uma função assíncrona, com o comando `async` no escopo que realizaremos a requisição, pois só assim é permitido usar o comando `await`.
 
-[^1]: Isto tem relação com módulos em javascript, que iremos ver logo a frente. Porém, isto se trata de um módulo em NodeJS para realizar requisições, [axios](https://github.com/axios/axios).
+<!-- [^1]: Isto tem relação com módulos em javascript, que iremos ver logo a frente. Porém, isto se trata de um módulo em NodeJS para realizar requisições, [axios](https://github.com/axios/axios). -->
 
 ```js
 const axios = require('axios')
 
 async function main() {
   const response = await axios.get('https://www.google.com.br/')
-
   // resto do código
 }
 
@@ -377,7 +395,7 @@ export function calcVezes(a, b) {
 
 O comando `default` estabelece a exportação padrão do nosso módulo.
 
-Agora, para importar essas coisas do arquivo exportado utiliza o comando `import`. No exemplo, importaremos do arquivo `modulo.js` em um outro arquivo `modulo2.js`, no mesmo diretório.
+Então, para importar essas coisas do arquivo exportado,utiliza-se o comando `import`. No exemplo, importaremos do arquivo `modulo.js` em um outro arquivo `modulo2.js`, no mesmo diretório.
 
 ```js
 import { calcSoma, calcVezes } from './modulo.js'
@@ -416,6 +434,8 @@ const modulo4 = require('./modulo4.js')
 // { array, calcDiv, calcMenos }
 ```
 
+---
+
 ## NodeJS
 ### Introdução 
 O NodeJS é um ambiente de execução JavaScript *server-side*, fornecendo a possibilidade de rodar códigos JavaScript sem um navegador.
@@ -423,7 +443,7 @@ O NodeJS é um ambiente de execução JavaScript *server-side*, fornecendo a pos
 ### NPM e YARN
 Dentro desse ambiente existem o gerenciadores de pacotes, *packager manager*, como o `npm` e o `yarn`. Esses fornecem bibliotecas para os desenvolvedores, criados pelos próprios usuários. 
 
-Atualmente o npm é um dos maiores repositórios do mundo. O yarn executa a mesma coisa que o npm, porém, ele é mais rápido, mais seguro e mais organizado, na minha opinião.
+Atualmente o npm é um dos maiores repositórios do mundo. O yarn executa a mesma coisa que o npm, porém, ele é mais rápido, mais seguro e mais organizado. Para achar qualquer módulo disponível para download acesse o site da [npm](https://www.npmjs.com/).
 
 Para instalar uma biblioteca em seu NodeJS globalmente, pode-se utilizar os seguintes comandos:
 
@@ -448,6 +468,21 @@ ou
 ```shell
 yarn add <package_name>
 ```
+
+Esses comandos geram um arquivo chamado `package.json`, nesse arquivo encontra-se as especificações do seu projeto: Nome, repositório, licença, descrição, versão, **dependências** e mais um monte de coisas.
+
+Todas as dependências são instaladas na pasta chamada `node_modules` do seu projeto, logo, é uma pasta que não costumamos mexer, afinal, lá estão as dependências que importamos para utilizar em nosso projeto. É importante notar que esta pasta costuma ser pesada, logo, precisamos retirar essa pasta do track do *github*, lá no `.gitignore`. Então, nós não enviamos esta pasta e é nela que estão todas as dependências para fazer o projeto funcionar, por isso, sempre que clonamos um projeto precisamos instalar todas essas dependências, com os seguintes comandos:
+
+```shell
+npm install
+```
+ou
+
+```shell
+yarn install
+```
+
+Por fim, um outro arquivo que é gerado é o `package-lock.json`, caso se use o npm, e o `yarn.lock`, caso se use o yarn. Estes arquivos nós não podemos mexer de forma alguma, são arquivos gerados e modificados automaticamente que gerenciam nossas dependências, para que não ocorra conflito entre elas e conflito entre suas versões. 
 
 **Recomenda-se o uso de apenas um packager manager, não misture os dois.**
 

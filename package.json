@@ -1,7 +1,7 @@
 {
   "name": "markdown-host",
   "version": "1.0.0",
-  "description": "Uma API para render meus markdowns",
+  "description": "API to render markdowns",
   "main": "src/index.js",
   "author": "Rodolfo Lemes Saraiva",
   "license": "MIT",
